@@ -761,31 +761,8 @@ def command_dump(args: argparse.Namespace) -> int:
             f"{marker} {slot}: {config.get_motor(slot, 'name')!r} "
             f"checksum {status_text(stored, calculated)}"
         )
-        for name in [
-            "motor_type",
-            "rotor_resistance_ohm",
-            "rotor_inductance_h",
-            "min_id_apk",
-            "max_id_apk",
-            "pole_pairs",
-            "encoder_count",
-            "encoder_reverse",
-            "ignore_halls_while_sensorless",
-            "sensorless_engage_hz",
-            "sensorless_disengage_hz",
-            "line_resistance_ohm",
-            "line_inductance_h",
-            "speed_constant",
-            "phase_sequence",
-            "motor_temp_cutout_c",
-            "motor_temp_ramp_c",
-            "temp_scale",
-            "temp_offset",
-            "thermistor_ro_ohm",
-            "thermistor_raw_coefficient",
-            "thermistor_beta",
-        ]:
-            print(f"    {name}: {format_value(name, config.get_motor(slot, name))}")
+        for field in MOTOR_FIELDS + MOTOR_VIRTUAL_FIELDS:
+            print(f"    {field.name}: {format_value(field.name, config.get_motor(slot, field.name))}")
     return 0
 
 
